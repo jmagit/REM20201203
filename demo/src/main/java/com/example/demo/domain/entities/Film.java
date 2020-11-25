@@ -2,6 +2,9 @@ package com.example.demo.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.example.demo.domain.core.EntityBase;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -13,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Film.findAll", query="SELECT f FROM Film f")
-public class Film implements Serializable {
+public class Film extends EntityBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
