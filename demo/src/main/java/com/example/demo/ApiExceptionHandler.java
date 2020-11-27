@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,8 +25,7 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ BadRequestException.class, InvalidDataException.class
-	})
+    @ExceptionHandler({ BadRequestException.class, InvalidDataException.class, MethodArgumentNotValidException.class	})
     @ResponseBody
     public ErrorMessage badRequest(Exception exception) {
         return new ErrorMessage(exception.getMessage(), "");

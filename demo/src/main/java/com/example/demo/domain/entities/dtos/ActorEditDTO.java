@@ -1,5 +1,9 @@
 package com.example.demo.domain.entities.dtos;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import com.example.demo.domain.entities.Actor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,8 +16,13 @@ public class ActorEditDTO {
 	@JsonProperty(value = "id")
 	private int actorId;
 	@JsonProperty(value = "nombre")
+	@NotBlank
+	@Size(max=45, min=2)
 	private String firstName;
 	@JsonProperty(value = "apellidos")
+	@NotBlank
+	@Size(max=45, min=2)
+	@Pattern(regexp = "^[A-Z]+$")
 	private String lastName;
 	
 	public static Actor from(ActorEditDTO source) {

@@ -9,6 +9,8 @@ import javax.validation.Validator;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,8 +41,8 @@ public class ActorResource {
 	ActorService srv;
 	
 	@GetMapping
-	public List<ActorNamesDTO> getAll() {
-		return srv.getAllIn(ActorNamesDTO.class);
+	public Page<ActorNamesDTO> getAll(Pageable page) {
+		return srv.getAllIn(ActorNamesDTO.class, page);
 	}
 
 	@GetMapping(path = "/{id}")
@@ -67,6 +69,8 @@ public class ActorResource {
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void update(@PathVariable int id, @Valid @RequestBody ActorEditDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
+		if(id != item.getActorId())
+			throw new BadRequestException("No coinciden los identificadores");
 		srv.modify(ActorEditDTO.from(item));
 	}
 
