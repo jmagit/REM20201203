@@ -1,9 +1,11 @@
 package com.example.demo.exceptions;
 
 public class NotFoundException extends Exception {
+	private final static String MSG = "NOT FOUND";
 	private static final long serialVersionUID = 1L;
 
 	public NotFoundException() {
+		this(MSG);
 	}
 
 	public NotFoundException(String message) {
@@ -11,17 +13,15 @@ public class NotFoundException extends Exception {
 	}
 
 	public NotFoundException(Throwable cause) {
-		super(cause);
+		super(MSG, cause);
 	}
 
 	public NotFoundException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public NotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
 	}
 
 }
