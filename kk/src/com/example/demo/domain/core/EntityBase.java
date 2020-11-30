@@ -15,16 +15,6 @@ public abstract class EntityBase {
 	}
 	
 	@JsonIgnore
-	public String getErrorsString() {
-		Set<ConstraintViolation<EntityBase>> lst = getErrors();
-		if(lst.isEmpty())
-			return "";
-		StringBuilder sb = new StringBuilder("ERRORES:");
-		lst.stream().forEach(err -> sb.append(" " + err.getPropertyPath() + ": " + err.getMessage()));
-		return sb.toString();
-	}
-	
-	@JsonIgnore
 	public boolean isValid() {
 		return getErrors().size() == 0;
 	}

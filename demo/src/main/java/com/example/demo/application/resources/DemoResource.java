@@ -1,14 +1,25 @@
 package com.example.demo.application.resources;
 
+import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.domain.core.EntityBase;
+import com.example.demo.domain.core.NIF;
 import com.example.demo.domain.entities.Actor;
+import com.example.demo.domain.entities.Persona;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @RestController
 public class DemoResource {
@@ -58,6 +69,14 @@ public class DemoResource {
 	@GetMapping(path = "/masdatos")
 	public Actor datos() {
 		return new Actor(666,"ddd","DDDD");
+	}
+	
+	@GetMapping(path = "/persona")
+	public Persona persona() {
+		return new Persona(666,"ddd","NIF", "");
+	}
+	@PostMapping(path = "/persona")
+	public void persona(@Valid @RequestBody Persona item) {
 	}
 	
 }

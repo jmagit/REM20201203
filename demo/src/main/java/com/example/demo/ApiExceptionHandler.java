@@ -25,10 +25,20 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ BadRequestException.class, InvalidDataException.class, MethodArgumentNotValidException.class	})
+    @ExceptionHandler({ BadRequestException.class, InvalidDataException.class	})
     @ResponseBody
     public ErrorMessage badRequest(Exception exception) {
         return new ErrorMessage(exception.getMessage(), "");
     }
+
+	@ExceptionHandler({ MethodArgumentNotValidException.class })
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorMessage notValidException(MethodArgumentNotValidException exception) {
+		StringBuilder sb = new StringBuilder("ERRORES:");
+		exception.getBindingResult().getFieldErrors().stream()
+				.forEach(err -> sb.append(" " + err.getField() + ": " + err.getDefaultMessage()));
+		return new ErrorMessage("Invalid data", sb.toString());
+	}
 }
 

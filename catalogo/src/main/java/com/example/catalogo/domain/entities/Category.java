@@ -1,8 +1,11 @@
-package com.example.demo.domain.entities;
+package com.example.catalogo.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import com.example.demo.domain.core.EntityBase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Timestamp;
@@ -14,8 +17,7 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
-public class Category implements Serializable {
+public class Category extends EntityBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,8 +26,11 @@ public class Category implements Serializable {
 	private byte categoryId;
 
 	@Column(name="last_update")
-	private Timestamp lastUpdate;
+	@JsonIgnore
+	private Timestamp lastUpdate = new Timestamp(System.currentTimeMillis());
 
+	@NotNull
+	@Size(max=25)
 	private String name;
 
 	//bi-directional many-to-one association to FilmCategory
@@ -34,6 +39,10 @@ public class Category implements Serializable {
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
+	}
+
+	public Category(byte categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public byte getCategoryId() {

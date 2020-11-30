@@ -2,9 +2,6 @@ package com.example.demo.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -15,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
-public class Category implements Serializable {
+public class Category extends com.example.demo.domain.core.EntityBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -30,7 +27,6 @@ public class Category implements Serializable {
 
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="category")
-	@JsonIgnore
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
