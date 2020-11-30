@@ -15,6 +15,9 @@ import com.example.demo.domain.entities.dtos.ActorEditDTO;
 import com.example.demo.domain.entities.dtos.ActorNamesDTO;
 import com.example.demo.infraestructure.repositories.ActorRepository;
 
+import springfox.documentation.oas.annotations.EnableOpenApi;
+
+@EnableOpenApi
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 

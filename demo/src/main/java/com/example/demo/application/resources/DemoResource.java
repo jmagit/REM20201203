@@ -17,11 +17,17 @@ import com.example.demo.domain.core.NIF;
 import com.example.demo.domain.entities.Actor;
 import com.example.demo.domain.entities.Persona;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @RestController
+@Api(value = "Ejemplos del curso")
 public class DemoResource {
 	@GetMapping(path = "saluda")
 	public String saluda() {
@@ -75,8 +81,12 @@ public class DemoResource {
 	public Persona persona() {
 		return new Persona(666,"ddd","NIF", "");
 	}
+	@ApiOperation(value = "Ejemplo de validaciones")
 	@PostMapping(path = "/persona")
-	public void persona(@Valid @RequestBody Persona item) {
+	@ApiResponses({
+		@ApiResponse(code = 400, message = "Datos que no pasan la validación")
+	})
+	public void persona(@Valid @RequestBody @ApiParam(value = "Datos de la persona") Persona item) {
 	}
 	
 }

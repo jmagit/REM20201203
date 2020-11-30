@@ -25,7 +25,7 @@ public class Language extends EntityBase implements Serializable {
     public static class Complete extends Partial {}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="language_id")
 	@JsonView(Language.Partial.class)
 	private byte languageId;

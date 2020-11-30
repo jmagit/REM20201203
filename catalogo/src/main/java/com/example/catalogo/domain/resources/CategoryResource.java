@@ -75,7 +75,7 @@ public class CategoryResource {
 	}
 
 	@PutMapping(path = "/{id}")
-	public Category modify(@PathVariable int id, @Valid @RequestBody Category item) throws Exception {
+	public Category modify(@PathVariable byte id, @Valid @RequestBody Category item) throws Exception {
 		if (item.getCategoryId() != id)
 			throw new BadRequestException("No coinciden los ID");
 		if (item.isInvalid())

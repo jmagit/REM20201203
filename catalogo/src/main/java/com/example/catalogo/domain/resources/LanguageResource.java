@@ -86,7 +86,7 @@ public class LanguageResource {
 
 	@PutMapping(path = "/{id}")
 	@JsonView(Language.Partial.class)
-	public Language modify(@PathVariable int id, @Valid @RequestBody Language item) throws Exception {
+	public Language modify(@PathVariable byte id, @Valid @RequestBody Language item) throws Exception {
 		if (item.getLanguageId() != id)
 			throw new BadRequestException("No coinciden los ID");
 		if (item.isInvalid())

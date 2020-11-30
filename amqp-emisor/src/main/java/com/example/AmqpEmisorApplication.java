@@ -18,7 +18,7 @@ public class AmqpEmisorApplication {
 	}
     @Bean
     public ApplicationRunner runner(AmqpTemplate template) {
-        return args -> template.convertAndSend("saludos", "Hola mundo");
+        return args -> template.convertAndSend("saludos", new MessageDTO("Hola mundo"));
     }
     @Bean
     public Queue myQueue() {

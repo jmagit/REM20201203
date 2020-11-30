@@ -2,6 +2,9 @@ package com.example.demo.domain.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class Language implements Serializable {
 
 	//bi-directional many-to-one association to Film
 	@OneToMany(mappedBy="languageVO")
+	@JsonIgnore
 	private List<Film> filmsVO;
 
 	public Language() {

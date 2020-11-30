@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.example.demo.domain.core.EntityBase;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -28,6 +30,7 @@ public class Film extends EntityBase implements Serializable {
 	private String description;
 
 	@Column(name="last_update")
+	@JsonFormat(pattern = "dd/MM/yyyy hh:mm")
 	private Timestamp lastUpdate;
 
 	private int length;
@@ -60,14 +63,17 @@ public class Film extends EntityBase implements Serializable {
 
 	//bi-directional many-to-one association to FilmActor
 	@OneToMany(mappedBy="film")
+	@JsonIgnore
 	private List<FilmActor> filmActors;
 
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="film")
+	@JsonIgnore
 	private List<FilmCategory> filmCategories;
 
 	//bi-directional many-to-one association to Inventory
 	@OneToMany(mappedBy="film")
+	@JsonIgnore
 	private List<Inventory> inventories;
 
 	public Film() {
