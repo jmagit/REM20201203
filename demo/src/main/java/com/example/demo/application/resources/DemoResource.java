@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.Rango;
 import com.example.demo.application.proxies.CatalogoProxy;
 import com.example.demo.domain.core.EntityBase;
 import com.example.demo.domain.core.NIF;
@@ -133,6 +135,15 @@ public class DemoResource {
 	public String getServicios() {
 		return proxy.getServices();
 	}
-
 	
+	@Value("${mi.cofig.valor}")
+	private String miClave;
+
+	@Autowired
+	private Rango rango;
+	
+	@GetMapping(path = "config")
+	public String getConfig() {
+		return miClave + " min: " + rango.getMin() + " max: " + rango.getMax();
+	}
 }
