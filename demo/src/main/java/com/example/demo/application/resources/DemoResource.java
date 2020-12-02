@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.application.proxies.CatalogoProxy;
 import com.example.demo.domain.core.EntityBase;
 import com.example.demo.domain.core.NIF;
 import com.example.demo.domain.entities.Actor;
@@ -114,6 +115,24 @@ public class DemoResource {
 	}
 	@GetMapping(path = "pelis/{id}")
 	public PeliDTO getPelis(@PathVariable int id) {
-		return srvRest.getForObject("http://localhost:8011/peliculas/{id}?mode=short", PeliDTO.class, id);
+		return srvRest.getForObject("http://localhost:8080/catalogo/peliculas/{id}?mode=short", PeliDTO.class, id);
 	}
+	
+	@Autowired
+	CatalogoProxy proxy;
+
+	@GetMapping(path = "catalogo")
+	public List<PeliDTO> getCatalogo() {
+		return proxy.getPelis();
+	}
+	@GetMapping(path = "catalogo/{id}")
+	public PeliDTO getCatalogo(@PathVariable int id) {
+		return proxy.getPeli(id);
+	}
+	@GetMapping(path = "servicios")
+	public String getServicios() {
+		return proxy.getServices();
+	}
+
+	
 }
