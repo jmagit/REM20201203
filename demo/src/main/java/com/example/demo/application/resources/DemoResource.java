@@ -1,8 +1,15 @@
 package com.example.demo.application.resources;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.domain.core.EntityBase;
 import com.example.demo.domain.core.NIF;
 import com.example.demo.domain.entities.Actor;
 import com.example.demo.domain.entities.Persona;
+import com.example.demo.domain.entities.dtos.FilmShortDTO;
+import com.example.demo.domain.entities.dtos.PeliDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -89,4 +99,21 @@ public class DemoResource {
 	public void persona(@Valid @RequestBody @ApiParam(value = "Datos de la persona") Persona item) {
 	}
 	
+	@Autowired
+	RestTemplate srvRest;
+	
+	@GetMapping(path = "pelis")
+	public List<PeliDTO> getPelis() {
+		ResponseEntity<List<PeliDTO>> response = srvRest.exchange(
+				"http://localhost:8011/peliculas?mode=short", 
+				HttpMethod.GET,
+				HttpEntity.EMPTY, 
+				new ParameterizedTypeReference<List<PeliDTO>>() {}
+				);
+		return response.getBody();
+	}
+	@GetMapping(path = "pelis/{id}")
+	public PeliDTO getPelis(@PathVariable int id) {
+		return srvRest.getForObject("http://localhost:8011/peliculas/{id}?mode=short", PeliDTO.class, id);
+	}
 }
